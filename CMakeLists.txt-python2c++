@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.12)
+project(pointpillars_interface)
+
+set(CMAKE_CXX_STANDARD 11)
+include_directories(
+   /usr/local/cuda-11.4/targets/aarch64-linux/include/ 
+)
+find_package(pybind11 REQUIRED)
+
+pybind11_add_module(${PROJECT_NAME} pointpillars_interface.cpp)
+#add_library(pointpillars_interface MODULE pointpillars_interface.cpp)
+target_compile_definitions(${PROJECT_NAME} PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+target_include_directories(${PROJECT_NAME} PRIVATE ${PYBIND11_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE pybind11::module /home/nvidia/DATA/xuquanfei/Lidar_AI_Solution/CUDA-PointPillars/python_c/libPointPillars.so)
